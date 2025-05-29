@@ -1,0 +1,25 @@
+name: Python CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+
+    - name: Install dependencies
+      run: |
+        pip install bandit safety
+
+    - name: Run Bandit security scan
+      run: bandit -r .
+
+    - name: Run Safety check
+      run: safety check
